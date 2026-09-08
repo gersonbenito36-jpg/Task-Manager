@@ -3,6 +3,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Microsoft.AspNetCore.Identity;
 
 
 var builder = WebApplication.CreateBuilder(args); //constructor (objeto que se irá armando pieza por pieza)
@@ -10,8 +11,11 @@ var builder = WebApplication.CreateBuilder(args); //constructor (objeto que se i
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();//INYECCION DE DEPENDENCIAS, SE AGREGA EL SERVICIO DE OPENAPI
+builder.Services.AddAuthorization();
 builder.Services.AddDbContext<AppDbContext>(options=>
 options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddIdentity<Usuario, IdentityRole<Guid>>()
+    .AddEntityFrameworkStores<AppDbContext>();
 builder.Services.AddAuthentication(options =>
 {
     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
@@ -29,6 +33,7 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = false
     };
 });
+builder.Services.AddControllers();
 
 var app = builder.Build(); //Aquí el builder ya terminó de armarse y se convierte en la aplicación real (app),
                            // lista para configurar cómo responde a peticiones.
@@ -38,8 +43,10 @@ if (app.Environment.IsDevelopment())  // una tuberia por donde pasa cada petici�
 {
     app.MapOpenApi();// SOLO SE ACTIVA EL OPENAPI SI ESTAMOS EN DESARROLLO, NO EN PRODUCCION
 }
-
 app.UseHttpsRedirection(); //fuerza a que toda petición use HTTPS (conexión segura)
+app.UseAuthentication();
+app.UseAuthorization(); //se asegura de que el usuario esté autorizado para acceder a un recurso
+app.MapControllers(); 
 
 app.Run();
 

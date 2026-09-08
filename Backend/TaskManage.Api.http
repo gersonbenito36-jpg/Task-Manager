@@ -1,6 +1,118 @@
 @TaskManage.Api_HostAddress = http://localhost:5111
 
-GET {{TaskManage.Api_HostAddress}}/weatherforecast/
-Accept: application/json
+POST {{TaskManage.Api_HostAddress}}/api/auth/registro
+Content-type: application/json
+
+{
+    "email" : "email@ejemplo.com",
+    "password" : "Prueba1234!"
+}
+###
+# @name login
+POST {{TaskManage.Api_HostAddress}}/api/auth/login
+Content-type: application/json
+
+{
+    "email" : "email@ejemplo.com",
+    "password" : "Prueba1234!"
+}
+
 
 ###
+
+### Obtener tareas
+GET {{TaskManage.Api_HostAddress}}/api/tareas
+Authorization: Bearer {{login.response.body.$.token}}
+
+
+###
+### Crear categoría
+# @name crearCategoria
+POST {{TaskManage.Api_HostAddress}}/api/categorias/crearCategoria
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.$.token}}
+
+{
+    "nombre": "Estudios"
+}
+
+###
+
+### Obtener categorías
+GET {{TaskManage.Api_HostAddress}}/api/categorias
+Authorization: Bearer {{login.response.body.$.token}}
+
+### Crear tarea
+# @name crearTarea
+POST {{TaskManage.Api_HostAddress}}/api/tareas/crearTarea
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.$.token}}
+
+{
+    "titulo": "Prueba eliminar tarea ",
+    "descripcion": "Prueba para eliminar una tarea",
+    "fechaLimite": "2026-09-15T00:00:00",
+    "estado": 0,
+    "prioridad": 0,
+    "categoriaId": 1
+}
+
+###
+
+### Obtener tareas (verificar que apareció)
+GET {{TaskManage.Api_HostAddress}}/api/tareas
+Authorization: Bearer {{login.response.body.$.token}}
+
+###
+
+### Editar tarea
+PUT {{TaskManage.Api_HostAddress}}/api/tareas/editarTarea/1
+Content-Type: application/json
+Authorization: Bearer {{login.response.body.$.token}}
+
+{
+    "titulo": "Terminar el CRUD de Tareas (editado)",
+    "descripcion": "Ya probé POST, ahora pruebo PUT",
+    "fechaLimite": "2026-09-20T00:00:00",
+    "estado": 1,
+    "prioridad": 2,
+    "categoriaId": 1
+}
+
+###
+
+### Obtener tareas de nuevo (verificar que el título cambió)
+GET {{TaskManage.Api_HostAddress}}/api/tareas
+Authorization: Bearer {{login.response.body.$.token}}
+
+
+###
+
+
+### Eliminar tarea (prueba simple)
+DELETE {{TaskManage.Api_HostAddress}}/api/tareas/eliminarTarea/2
+Authorization: Bearer {{login.response.body.$.token}}
+
+###
+
+### Verificar que la tarea 1 ya no aparece
+GET {{TaskManage.Api_HostAddress}}/api/tareas
+Authorization: Bearer {{login.response.body.$.token}}
+
+###
+
+### Eliminar categoría (prueba de cascada)
+DELETE {{TaskManage.Api_HostAddress}}/api/categorias/eliminarCategoria/1
+Authorization: Bearer {{login.response.body.$.token}}
+
+###
+
+### Verificar que las tareas de esa categoría también desaparecieron
+GET {{TaskManage.Api_HostAddress}}/api/tareas
+Authorization: Bearer {{login.response.body.$.token}}
+
+###
+
+### Verificar que la categoría ya no aparece
+GET {{TaskManage.Api_HostAddress}}/api/categorias
+Authorization: Bearer {{login.response.body.$.token}}
