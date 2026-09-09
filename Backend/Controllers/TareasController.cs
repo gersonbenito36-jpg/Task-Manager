@@ -14,7 +14,7 @@ public class TareasController : ControllerBase
     }
     [Authorize]
     [HttpGet]
-    public async Task<IActionResult> ObtenerTareas()
+    public async Task<IActionResult> ObtenerTareas([FromQuery] Estado? estado, [FromQuery] int? categoriaId)
     {
         var usuarioTexto = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;// sacamos el ID del usuario desde el TOKEN, que ya validó UseAuthentication
         if(usuarioTexto == null)
@@ -22,7 +22,17 @@ public class TareasController : ControllerBase
             return Unauthorized ("No se ha encontrado un usuario autenticado"); // si no hay un usuario autenticado, lanzará un error
         }
         Guid usuarioId = Guid.Parse(usuarioTexto);// convertimos el id a un guid nuevamente a traves de un parseo
-        var tareas = await _context.Tareas.Where(tar => tar.UsuarioId == usuarioId).ToListAsync();  // se obtiene la lista de tareas del usuario autenticado, filtrando por el ID del usuario
+        var query = _context.Tareas.Include(tar => tar.Categoria).Where(tar => tar.UsuarioId == usuarioId);  // se obtiene la lista de tareas del usuario autenticado, filtrando por el ID del usuario
+
+        if(estado != null)
+        {
+            query = query.Where(tar => tar.Estado == estado);
+        }
+        if(categoriaId != null)
+        {
+            query = query.Where(tar => tar.CategoriaId == categoriaId );
+        }
+        var tareas = await query.ToListAsync();
         return Ok(tareas);
     }
 
@@ -36,6 +46,12 @@ public class TareasController : ControllerBase
             return Unauthorized("No se ha encontrado un usuario autenticado"); // si no hay un usuario autenticado, lanzará un error
         }
         Guid usuarioId = Guid.Parse(usuarioTexto); // convertimos el id a un guid nuevamente para poder guardarlo en la base de datos, ya que el campo UsuarioId es de tipo Guid
+        if(dto.FechaLimite.Date <DateTime.UtcNow.Date)
+        {
+            return BadRequest("La fecha no puede ser en el pasado");
+        }
+
+
         var nuevaTarea = new Tarea
         {
             
@@ -63,6 +79,11 @@ public class TareasController : ControllerBase
             return Unauthorized("No se puede editar esta tarea, usuario no autenticado");
         }
         Guid usuarioId = Guid.Parse(usuarioTexto);
+
+        if(dto.FechaLimite.Date < DateTime.UtcNow.Date)
+        {
+            return BadRequest("La fecha limite no puede ser actualizada en el pasado");
+        }
 
         // acá tareExistente es la tarea que se quiere editar, y se busca en la base de datos por el id de la tarea y el id del usuario, para asegurarse de que el usuario autenticado es el dueño de la tarea
         var tareaExistente = await _context.Tareas.FirstOrDefaultAsync(t => t.TareaId == id && t.UsuarioId == usuarioId); // t.TareaId es el id de la tarea que se quiere editar, y t.UsuarioId es el id del usuario que está autenticado, para asegurarse de que el usuario autenticado es el dueño de la tarea.
@@ -102,6 +123,6 @@ public class TareasController : ControllerBase
         }
         _context.Tareas.Remove(eliminarTarea);
         await _context.SaveChangesAsync();
-        return Ok("Tarea elimina con éxito");
+        return Ok("Tarea eliminada con éxito");
     }
 }

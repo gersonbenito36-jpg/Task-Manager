@@ -37,12 +37,12 @@ builder.Services.AddControllers();
 
 var app = builder.Build(); //Aquí el builder ya terminó de armarse y se convierte en la aplicación real (app),
                            // lista para configurar cómo responde a peticiones.
-
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())  // una tuberia por donde pasa cada petición
 {
     app.MapOpenApi();// SOLO SE ACTIVA EL OPENAPI SI ESTAMOS EN DESARROLLO, NO EN PRODUCCION
 }
+app.UseExceptionHandler("/error");
 app.UseHttpsRedirection(); //fuerza a que toda petición use HTTPS (conexión segura)
 app.UseAuthentication();
 app.UseAuthorization(); //se asegura de que el usuario esté autorizado para acceder a un recurso

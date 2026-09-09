@@ -33,7 +33,7 @@ Content-Type: application/json
 Authorization: Bearer {{login.response.body.$.token}}
 
 {
-    "nombre": "Estudios"
+    "nombre": "Vacaciones"
 }
 
 ###
@@ -49,12 +49,12 @@ Content-Type: application/json
 Authorization: Bearer {{login.response.body.$.token}}
 
 {
-    "titulo": "Prueba eliminar tarea ",
-    "descripcion": "Prueba para eliminar una tarea",
+    "titulo": "prueba creando estado",
+    "descripcion": "creamos una con estado uno",
     "fechaLimite": "2026-09-15T00:00:00",
-    "estado": 0,
-    "prioridad": 0,
-    "categoriaId": 1
+    "estado": 1,
+    "prioridad": 1,
+    "categoriaId": 3
 }
 
 ###
@@ -90,7 +90,7 @@ Authorization: Bearer {{login.response.body.$.token}}
 
 
 ### Eliminar tarea (prueba simple)
-DELETE {{TaskManage.Api_HostAddress}}/api/tareas/eliminarTarea/2
+DELETE {{TaskManage.Api_HostAddress}}/api/tareas/eliminarTarea/16
 Authorization: Bearer {{login.response.body.$.token}}
 
 ###
@@ -116,3 +116,17 @@ Authorization: Bearer {{login.response.body.$.token}}
 ### Verificar que la categoría ya no aparece
 GET {{TaskManage.Api_HostAddress}}/api/categorias
 Authorization: Bearer {{login.response.body.$.token}}
+
+
+###
+# @name filtrarPorEstado
+GET {{TaskManage.Api_HostAddress}}/api/tareas?estado=1
+Authorization: Bearer {{login.response.body.$.token}}
+
+### 
+# @name filtradoPorCategoria
+
+GET {{TaskManage.Api_HostAddress}}/api/tareas?categoriaId=3
+Authorization: Bearer {{login.response.body.$.token}}
+
+##
