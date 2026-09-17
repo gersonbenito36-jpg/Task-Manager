@@ -4,22 +4,31 @@ import { ref } from 'vue'
 const emit = defineEmits(['cerrar', 'guardar'])
 const props = defineProps(['tarea', 'categorias'])
 
-const fechaFin = ref(props.tarea?.FechaLimite ?? '')
-const titulo = ref(props.tarea?.Titulo ?? '')
-const descripcion = ref(props.tarea?.Descripcion ?? '')
-const categoriaId = ref(props.tarea?.CategoriaId ?? '')
-const estado = ref(props.tarea?.Estado ?? 'Pendiente')
-const prioridad = ref(props.tarea?.Prioridad ?? 'Media')
+const fechaFin = ref(props.tarea?.FechaLimite ?? props.tarea?.fechaLimite ?? '')
+const titulo = ref(props.tarea?.Titulo ?? props.tarea?.titulo ?? '')
+const descripcion = ref(props.tarea?.Descripcion ?? props.tarea?.descripcion ?? '')
+const categoriaId = ref(props.tarea?.CategoriaId ?? props.tarea?.categoriaId ?? '')
+const estado = ref(props.tarea?.Estado ?? props.tarea?.estado ?? 'Pendiente')
+const prioridad = ref(props.tarea?.Prioridad ?? props.tarea?.prioridad ?? 'Media')
 
 function enviar() {
+  const valCat = Number(categoriaId.value)
+
+  // Validar que el usuario haya seleccionado una categoría válida
+  if (!valCat || valCat <= 0) {
+    alert('Por favor selecciona una categoría válida.')
+    return
+  }
+
   const tareaAGuardar = {
     FechaLimite: fechaFin.value,
     Titulo: titulo.value,
     Descripcion: descripcion.value,
-    CategoriaId: Number(categoriaId.value),
+    CategoriaId: valCat,
     Estado: estado.value,
     Prioridad: prioridad.value
   }
+  
   emit('guardar', tareaAGuardar)
 }
 </script>
@@ -34,7 +43,7 @@ function enviar() {
 
         <div class="information">
             <label for="fechaFin">Ingrese fecha plazo</label>
-            <input type="date" id="fechaFin" name="fechaFin" v-model="fechaFin">
+            <input type="date" id="fechaFin" name="fechaFin" v-model="fechaFin" required>
 
             <label for="titulo">Titulo</label>
             <input type="text" id="titulo" name="titulo" required placeholder="Titulo de la tarea" v-model="titulo">
@@ -42,10 +51,12 @@ function enviar() {
             <label for="descripcion">Descripción</label>
             <textarea name="descripcion" id="descripcion" required placeholder="Descripcion de tarea" v-model="descripcion"></textarea>
 
-            <select name="categoria" id="categoria" v-model="categoriaId">
-                <option value="" disabled>Seleccione una categoría</option>
-                <option v-for="categoria in categorias" :key="categoria.categoriaId" :value="categoria.categoriaId">
-                    {{ categoria.nombre }}
+            <label for="categoria">Categoría</label>
+            <select name="categoria" id="categoria" v-model="categoriaId" required>
+                <option value="" disabled selected>Seleccione una categoría</option>
+                <!-- Usamos (cat.id || cat.Id) para garantizar que encuentre el ID sin importar si la API responde en minúscula o mayúscula -->
+                <option v-for="cat in categorias" :key="cat.id || cat.Id" :value="cat.id || cat.Id">
+                    {{ cat.nombre || cat.Nombre }}
                 </option>
             </select>
 

@@ -10,7 +10,7 @@ const tareaSeleccionada = ref(null)
 const tareaEditarSeleccionada = ref(null)
 
 const categorias = ref([])
-const tareas = ref([])   // ← NUEVO: reemplaza a tareaEjemplo
+const tareas = ref([])   
 
 async function cargarCategorias() {
     const token = localStorage.getItem('token')
@@ -30,13 +30,13 @@ async function cargarCategorias() {
         console.error('No se pudo conectar con el servidor', error)
     }
 }
-
-// ← NUEVO: función completa para traer las tareas
+// función completa para traer las tareas
 async function cargarTareas() {
     const token = localStorage.getItem('token')
     try {
         const respuesta = await fetch('http://localhost:5111/api/tareas', {
             headers: {
+                'Content-Type': 'applicatio/JSON',
                 'Authorization': `Bearer ${token}`
             }
         })
@@ -52,7 +52,7 @@ async function cargarTareas() {
 
 onMounted(() => {
     cargarCategorias()
-    cargarTareas()   // ← NUEVO: se llama junto con cargarCategorias
+    cargarTareas()   // se llama junto con cargarCategorias
 })
 
 function abrirCreacion() {
