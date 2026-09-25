@@ -77,7 +77,7 @@ async function guardarTarea(tareaAGuardar) {
     const esEdicion = tareaEditarSeleccionada.value !== null
 
     const url = esEdicion
-        ? `http://localhost:5111/api/tareas/editarTarea/${tareaEditarSeleccionada.value.TareaId}`
+        ? `http://localhost:5111/api/tareas/editarTarea/${tareaEditarSeleccionada.value.tareaId}`
         : 'http://localhost:5111/api/tareas/crearTarea'
 
     const metodo = esEdicion ? 'PUT' : 'POST'
@@ -105,6 +105,30 @@ async function guardarTarea(tareaAGuardar) {
         console.error('No se pudo conectar con el servidor', error)
     }
 }
+
+
+async function eliminarTarea(){
+    const token  = localStorage.getItem('token')
+    const id = tareaSeleccionada.value.tareaId
+    try{
+        const respuesta = await fetch(`http://localhost:5111/api/tareas/eliminarTarea/${id}`,{
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        if(!respuesta.ok){
+            const detalleError = await respuesta.text()
+            console.error('Error al eliminar tarea', respuesta.status, detalleError)
+            return
+        }
+        modalEliminar.value = false;
+        cargarTareas()
+    } catch (error){
+        console.error('No se pudo conectar con el servidor', error)
+    }
+}
+
 </script>
 
 <template>
@@ -137,7 +161,7 @@ async function guardarTarea(tareaAGuardar) {
                 <td>{{ tarea.prioridad }}</td>
                 <td class="botones">
                     <button class="editar" @click="abrirEdicion(tarea)">Editar</button>
-                    <button class="eliminar" @click="abrirModalEliminar(tarea)">Eliminar</button>
+                    <button class="eliminar" @click="abrirModalEliminar(tarea)" @confirmar="eliminarTarea" >Eliminar</button>
                 </td>
             </tr>
         </tbody>
@@ -153,6 +177,7 @@ async function guardarTarea(tareaAGuardar) {
     v-if="modalEliminar" 
     :tarea="tareaSeleccionada"
     @cerrar="modalEliminar = false"
+    @confirmar="eliminarTarea"
     />
 </template>
 
@@ -187,7 +212,7 @@ async function guardarTarea(tareaAGuardar) {
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif
 }
 .nuevaTarea:hover{
-    background-color: rgb(35, 35, 87);
+    box-shadow: 0 4px 8px black;
     
 }
 .tabla-tareas {
@@ -232,22 +257,24 @@ async function guardarTarea(tareaAGuardar) {
     padding: 8px 14px;
 }
 .editar{
-    background-color: rgb(76, 170, 76);
+    background-color: rgb(3, 170, 3);
     font-weight: bold;
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    color: rgb(243, 225, 225);
+    border: none;
 }
 .eliminar{
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
     font-weight: bold;
-    background-color: rgb(245, 80, 80);
+    background-color: rgb(201, 2, 2);
+    color: white;
+    border: none;
 }
 .editar:hover{
-    background-color: rgb(0, 184, 0);
-    color: white;
+    box-shadow: 0 4px 8px black;
 }
 .eliminar:hover{
-    background-color: red;
-    color: white;
+    box-shadow: 0 4px 8px black;
 }
 .header-task{
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;

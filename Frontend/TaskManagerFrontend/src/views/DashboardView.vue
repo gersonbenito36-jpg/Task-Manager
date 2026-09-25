@@ -1,4 +1,11 @@
 <script setup>
+import { useRouter } from 'vue-router';
+const router = useRouter()
+
+function cerrarSesion() {
+    localStorage.removeItem('token')
+    router.replace('/login')
+}
 </script>   
 
 <template>
@@ -20,7 +27,9 @@
         <div style="background-color: white; width: 33.3%; display: flex; flex-direction:  row; justify-content: flex-start; gap: 20px; align-items: center;">
             
                 <h3 style="font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; font-size: medium; ">Nombre usuario</h3>
-                <button style="padding: 6px 16px; cursor: pointer; border-radius: 12px; margin-right: 20px; margin-bottom: 6px; font-weight: bold; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; background-color: rgb(250, 30, 0); color: white; border: none;">Salir</button>
+                <button style="padding: 10px 16px; cursor: pointer; border-radius: 12px; margin-right: 20px; margin-bottom: 6px; font-weight: bold;
+                 font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; background-color: rgb(250, 30, 0); color: white; border: none;"
+                 @click="cerrarSesion">Salir</button>
         </div>
        </nav>
     </header>
@@ -37,15 +46,15 @@
    background-color: #4F46E5;
    color: rgb(247, 244, 244);
    margin-left: 20px;
-   padding: 0;
-   width: 40px;
-   height: 30px;
-   border-radius: 10px;
+   padding: 15px;
+   width: 25px;
+   border-radius: 30px;
 }
 span{
     font-size: larger;
     color: white;
     font-weight: bolder;
+    
 }
 .taskManager{
     font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;

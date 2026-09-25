@@ -159,6 +159,9 @@ onMounted(() => {
     font-weight: bold;
     cursor: pointer;
 }
+.nuevaCategoria:hover{
+    box-shadow: 0 4px 8px black;
+}
 
 .tabla-categorias {
     width: 100%;
@@ -195,21 +198,23 @@ onMounted(() => {
     padding: 8px 14px;
 }
 .editar{
-    background-color: rgb(70, 158, 70);
+    background-color: rgb(3, 139, 3);
     font-weight: bold;
     border: none;
+    color: white;
 }
 .eliminar{
-    background-color: rgb(247, 68, 68);
+    background-color: rgb(211, 17, 17);
     font-weight: bold;
     border: none;
+    color: white;
 }
 .editar:hover{
-    background-color: blue;
-    color: white;
+    box-shadow: 0 4px 8px black;
+    color: black;
 }
 .eliminar:hover{
-    background-color: red;
-    color: white;
+    box-shadow: 0 4px 8px black;
+    color: black;
 }
 </style>

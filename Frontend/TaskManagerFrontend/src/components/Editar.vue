@@ -4,7 +4,7 @@ import { ref } from 'vue'
 const emit = defineEmits(['cerrar', 'guardar'])
 const props = defineProps(['tarea', 'categorias'])
 
-const fechaFin = ref(props.tarea?.FechaLimite ?? props.tarea?.fechaLimite ?? '')
+const fechaFin = ref((props.tarea?.FechaLimite ?? props.tarea?.fechaLimite ?? '').slice(0, 10));
 const titulo = ref(props.tarea?.Titulo ?? props.tarea?.titulo ?? '')
 const descripcion = ref(props.tarea?.Descripcion ?? props.tarea?.descripcion ?? '')
 const categoriaId = ref(props.tarea?.CategoriaId ?? props.tarea?.categoriaId ?? '')
@@ -69,7 +69,7 @@ function enviar() {
             <label for="prioridad">Prioridad</label>
             <select name="prioridad" id="prioridad" v-model="prioridad">
                 <option value="Baja">Baja</option>
-                <option value="Media">Media</option>
+                <option value="Media">Intermedio</option>
                 <option value="Alta">Alta</option>
             </select>
         </div>

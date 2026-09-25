@@ -1,8 +1,9 @@
 <script setup>
 import { defineEmits } from 'vue';
 import { defineProps } from 'vue';
-const props = defineProps('tarea')
-const emit = defineEmits(['cerrar'])
+const props = defineProps(['tarea'])
+const emit = defineEmits(['cerrar', 'confirmar'])
+
 </script>
 
 
@@ -15,7 +16,7 @@ const emit = defineEmits(['cerrar'])
             </div>
             <div class="botones">
                 <button @click="emit('cerrar')" class="cancelar">Cancelar</button>
-                <button class="boton-eliminar">Eliminar</button>
+                <button @click="emit('confirmar')" class="boton-eliminar">Eliminar</button>
             </div>
         </div>
     </div>

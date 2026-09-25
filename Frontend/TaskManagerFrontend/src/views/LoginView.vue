@@ -2,12 +2,11 @@
 import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 
-
-
 const router = useRouter();
 const email = ref('');
 const password = ref('');
 const errorLogin = ref('');
+const mostrarPassword = ref(false);
 
 async function iniciarSesion(){
     errorLogin.value = ''
@@ -49,8 +48,8 @@ async function iniciarSesion(){
                     <label for="correo">Correo electrónico</label>
                     <input v-model="email" type="email" id="correo" placeholder="Correo electrónico">
                     <label for="pasword">Contraseña</label>
-                    <input v-model="password" type="password" id="password" placeholder="*********">
-                    <div class="password"><span class="check"><input type="checkbox" name="check" id="check">Mostrar contraseña</span></div>
+                    <input v-model="password" :type="mostrarPassword ? 'text':'password'" id="password" placeholder="*********">
+                    <div class="password"><span class="check"><input v-model="mostrarPassword" type="checkbox" name="check" id="check">Mostrar contraseña</span></div>
                     <p v-if="errorLogin" style="color: red;">{{ errorLogin }}</p>
                     <button type="submit">Iniciar sesión</button>
                     <div class="registro-form">
@@ -62,7 +61,7 @@ async function iniciarSesion(){
 
 <style scoped>
 .login-container{
-    background: linear-gradient(90deg, rgb(182, 182, 255), rgb(22, 22, 65));
+    background: linear-gradient(rgb(100, 59, 245),rgb(161, 160, 160),  rgb(100, 59, 245));
     margin: 0%;
     width: 100%;
     min-height: 100vh;
@@ -75,21 +74,23 @@ form{
     display: flex;
     align-items: center;
     flex-direction: column;
-    border: 2px dotted #4F46E5;
-    background-color: rgb(241, 243, 247);
+    border: 1px solid #4F46E5;
+    background: linear-gradient(#dadae6, #4F46E5, #dadae6);
     border-radius: 12px;
     padding: 48px 48px 25px;
     max-width: 275px;
-    box-shadow: 0px 15px 25px rgba(0, 0, 0, 0.55);
+    box-shadow: 0px 4px 10px  #131225;
 }
 .logo-box{
     background-color: #4F46E5;
-    width: 15%;
+    width: 30px;
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 12px;
-    border-radius: 15px;
+    padding: 15px;
+    border-radius: 33px;
+    border: 2px solid white;
+    box-shadow: 0 4px 8px  rgb(32, 38, 99);
 }
 span{
     font-size: larger;
@@ -112,6 +113,9 @@ span{
     font-size: smaller;
     font-weight: lighter;
 }
+h3{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+}
 .check input{
     width: auto;
 }
@@ -127,38 +131,42 @@ input{
     padding: 12px;
     margin: 4px;
     width: 90%;
-    background-color: #c6c5d8;
+    background-color: #ffffff;
     border-radius: 6px;
-    border: none;
+    border: 1px solid #4F46E5 ;
 }
 input:focus{
     outline: none;
     border: 2px solid #4F46E5;
     background-color: white;
+    box-shadow: 0px 4px 20px white;
 }
 button{
     background-color: #4F46E5;
     padding: 10px;
     width: 90%;
     margin-top: 16px;
-    border-radius: 8px;
+    border-radius: 20px;
     color: white;
     font-weight: bold;
     font-size: medium;
-    border: 2px dotted #9c0000;
+    border: 2px solid white;
 }
 button:hover{
-    background-color: rgb(37, 79, 168);
+    background-color: white;
     cursor: pointer;
+    color: #4F46E5;
+    border: 2px solid  #4F46E5;
 }
 .registro-form{
-    color: blue;
+    color: rgb(253, 253, 255);
     margin-top: 25px;
     margin-bottom: 0;
 }
 .registro-form:hover{
     font-weight: bolder;
     cursor: pointer;
+    color: white;
 }
 
 </style>

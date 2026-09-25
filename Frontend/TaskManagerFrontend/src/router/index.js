@@ -44,4 +44,13 @@ const router = createRouter({
   ],
 })
 
+
+router.beforeEach((to) =>{
+  const token = localStorage.getItem('token') // la variable token guarda el token cuandos e inicia sesión
+  const rutasPublicas = ['/login', '/registro'] // la variable rutas publicas , guarda las rutas que cualquiera puede ver sin haber iniciado sesión
+  if(!token && !rutasPublicas.includes(to.path)){
+    return '/login'
+  }
+})
+
 export default router
