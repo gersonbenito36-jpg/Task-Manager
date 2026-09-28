@@ -11,12 +11,6 @@ const categoriaSeleccionada = ref(null)
 const categoriaEditarSeleccionada = ref(null)
 const categorias = ref([]);
 
-// dato de prueba, hasta que traigamos la lista real del backend
-const categoriaEjemplo = {
-    CategoriaId: 1,
-    Nombre: 'Trabajo'
-}
-
 function abrirCreacion() {
     categoriaEditarSeleccionada.value = null
     modalCategoria.value = true
@@ -37,7 +31,7 @@ async function guardarCategoria(categoriaAGuardar) {
     const esEdicion = categoriaEditarSeleccionada.value !== null
 
     const url = esEdicion
-        ? `http://localhost:5111/api/categorias/editarCategoria/${categoriaEditarSeleccionada.value.CategoriaId}`
+        ? `http://localhost:5111/api/categorias/editarCategoria/${categoriaEditarSeleccionada.value.categoriaId}`
         : 'http://localhost:5111/api/categorias/crearCategoria'
 
     const metodo = esEdicion ? 'PUT' : 'POST'
@@ -64,6 +58,30 @@ async function guardarCategoria(categoriaAGuardar) {
         console.error('No se pudo conectar con el servidor', error)
     }
 }
+
+async function eliminarCategoria() {
+    const token = localStorage.getItem('token')
+    const categoriaId = categoriaSeleccionada.value.id
+    try{
+        const respuesta = await fetch(`http://localhost:5111/api/categorias/eliminarCategoria/${categoriaId}`, {
+            method: 'DELETE',
+            headers:{
+                'Authorization' : `Bearer ${token}`
+            }
+        })
+        if(!respuesta.ok){
+            const detalleError = await respuesta.text()
+            console.error("Error al eliminar categoria", respuesta.status, detalleError)
+            return
+        }
+
+        modalEliminar.value = false;
+        cargarCategorias()
+    } catch(error){
+        console.error("No se pudo conectar con el servidor", error)
+    }
+}
+
 
 
 
@@ -109,11 +127,11 @@ onMounted(() => {
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>{{ categoriaEjemplo.Nombre }}</td>
+            <tr v-for="categoria in categorias" :key="categoria.categoriaId">
+                <td>{{ categoria.nombre }}</td>
                 <td class="botones">
-                    <button class="editar" @click="abrirEdicion(categoriaEjemplo)">Editar</button>
-                    <button class="eliminar" @click="abrirModalEliminar(categoriaEjemplo)">Eliminar</button>
+                    <button class="editar" @click="abrirEdicion(categoria)">Editar</button>
+                    <button class="eliminar" @click="abrirModalEliminar(categoria)">Eliminar</button>
                 </td>
             </tr>
         </tbody>
@@ -129,6 +147,7 @@ onMounted(() => {
         v-if="modalEliminar"
         :tarea="categoriaSeleccionada"
         @cerrar="modalEliminar = false"
+        @confirmar="eliminarCategoria"
     />
 </template>
 

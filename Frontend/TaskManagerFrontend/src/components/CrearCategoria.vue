@@ -30,7 +30,7 @@ function enviar() {
 
             <div class="botones">
                 <button type="button" class="cancelar" @click="emit('cerrar')">Cancelar</button>
-                <button type="submit" class="guardar">Guardar</button>
+                <button type="submit" class="guardar" @click="guardar">Guardar</button>
             </div>
         </form>
     </div>
@@ -47,15 +47,16 @@ function enviar() {
     display: flex;
     justify-content: center;
     align-items: center;
-    background-color: rgba(0, 0, 0, 0.4);
+    background-color: rgba(0, 0, 0, 0.8);
 }
 
 .categoria-container {
-    background-color: rgb(245, 235, 235);
+    background-color: white;
     padding: 40px;
     width: 320px;
     border-radius: 10px;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    border: 2px solid #4F46E5;
 }
 
 .check-box {
@@ -68,10 +69,13 @@ function enviar() {
 
 .check-box span {
     color: white;
-    background-color: blue;
+    background-color: #4F46E5;
     padding: 6px 10px;
-    border-radius: 8px;
+    border-radius: 45px;
     font-weight: bolder;
+}
+h3{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .information {
@@ -88,13 +92,14 @@ label {
 input {
     padding: 12px;
     border-radius: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid #4F46E5;
     outline: none;
     margin-bottom: 20px;
 }
 
 input:hover {
-    border: 1px dashed violet;
+    border: 2px solid #4F46E5;
+    box-shadow: 0 4px 6px 0 black;
 }
 
 .botones {
@@ -112,20 +117,23 @@ button {
 }
 
 .cancelar {
-    background-color: rgb(240, 128, 128);
+    background-color: rgb(211, 34, 34);
+    color: white;
 }
 
 .cancelar:hover {
     background-color: red;
     color: white;
+    font-weight: bolder;
 }
 
 .guardar {
-    background-color: rgb(154, 154, 255);
+    background-color: blue;
+    color: white;
 }
 
 .guardar:hover {
-    background-color: blue;
+    background-color: rgb(0, 0, 155);
     color: white;
 }
 </style>

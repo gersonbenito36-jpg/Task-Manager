@@ -21,8 +21,8 @@ function cerrarSesion() {
             </div>
         </div>
         <div style="background-color: white; width: 33.3%; display: flex; justify-content:center; gap: 20px; align-items: center;">
-            <RouterLink to="/tareas" style="font-weight: bolder; color: black; text-decoration: none; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;  border-radius: 8px;">Tareas</RouterLink>
-            <RouterLink to="/categorias" style="font-weight: bolder; color: black; text-decoration: none; font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; ">Categorias</RouterLink>
+            <RouterLink to="/tareas" class="miRouter">Tareas</RouterLink>
+            <RouterLink to="/categorias" class="miRouter">Categorias</RouterLink>
         </div>
         <div style="background-color: white; width: 33.3%; display: flex; flex-direction:  row; justify-content: flex-start; gap: 20px; align-items: center;">
             
@@ -64,6 +64,18 @@ span{
     font-size: small;
     margin-top: 6px;
     margin-left: 10px;
+}
+.miRouter{
+    font-weight: bolder;
+     color: black; text-decoration: none;
+      font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif; 
+     border-radius: 8px;
+}
+.miRouter.router-link-active{
+    background-color: #4F46E5;
+    color: white;
+    padding: 6px;
+    box-shadow: 0px 4px 6px black;
 }
 
 </style>

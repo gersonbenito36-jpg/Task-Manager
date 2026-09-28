@@ -84,23 +84,31 @@ function enviar() {
 
 <style scoped>
 .editar-container{
-    background-color: gray;
-    min-width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
     height: 100vh;
-    top: 0%;
-    left: 0%;
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: center; /* Centra el formulario en la pantalla */
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 20px; /* Evita que toque los bordes en pantallas pequeñas */
+    box-sizing: border-box;
 }
+
+
+
 form{
     display: flex;
     flex-direction: column;
     justify-content: center;
     border-radius: 8px;
-    border: 2px solid blue;
-    padding: 32px;
+    border: 2px solid ;
+    padding: 20px;
     width: 25%;
+    background-color: white;
+    border: 2px solid #4F46E5;
 }
 .check-box{
     display: flex;
@@ -116,8 +124,8 @@ span{
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 8px 16px;
-    border-radius: 8px;
+    padding: 10px 14px;
+    border-radius: 27px;
 }
 .information{
     display: flex;
@@ -133,10 +141,23 @@ label{
 input{
     padding: 12px 4px;
     border-radius: 8px;
+    border: 2px solid #4F46E5;
+}
+textarea{
+    border: 2px solid #4F46E5;
+}
+select{
+    border: 2px solid #4F46E5;
 }
 textarea{
     padding: 20px;
     border-radius: 8px;
+}
+input:focus{
+    outline: none;
+}
+textarea:focus{
+    outline: none;
 }
 .botones{
     display: flex;
@@ -153,25 +174,34 @@ button{
     font-weight: bold;
 }
 .cancelar{
-    background-color: rgb(255, 91, 91);
+    background-color: rgb(221, 45, 45);
+    color: white;
+    border: none;
 
 }
 .guardar{
-    background-color: rgb(63, 66, 255) ;
+    background-color: rgb(20, 20, 252);
+    color: white;
+    border: none;
 }
 .cancelar:hover{
     background-color: red;
     color: white;
-    font-weight: bold;
+    
 }
 .guardar:hover{
-    background-color: blue;
+    background-color: rgb(1, 1, 216);
     color: white;
-    font-weight: bold;
+    
 }
 select{
     padding: 8px;
     border-radius: 8px;
 }
+h3{
+    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+    margin-left: 10px;
+}
+
 
 </style>
