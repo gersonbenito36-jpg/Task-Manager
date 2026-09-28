@@ -1,38 +1,22 @@
-# TaskManagerFrontend
+# Task Manager
 
-This template should help get you started developing with Vue 3 in Vite.
+Aplicación full-stack de gestión de tareas. Proyecto personal para practicar autenticación con JWT, una API protegida por usuario y consumo de esa API desde una SPA en Vue.
 
-## Recommended IDE Setup
+## Funcionalidades
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+- Registro e inicio de sesión con JWT
+- CRUD de tareas (título, descripción, fecha límite, estado, prioridad, categoría)
+- CRUD de categorías
+- Cada usuario ve y gestiona únicamente sus propias tareas y categorías
+- Filtros opcionales por estado y categoría
+- Rutas protegidas en el frontend según si hay sesión activa
 
-## Recommended Browser Setup
+## Tecnologías
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+**Backend:** ASP.NET Core Web API, Entity Framework Core, ASP.NET Core Identity, JWT, PostgreSQL (Neon)
 
-## Customize configuration
+**Frontend:** Vue 3 (Composition API), Vue Router, Pinia, Vite, CSS
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+**Herramientas:** Git, GitHub, VS Code (REST Client para probar la API), `dotnet user-secrets`
 
-## Project Setup
 
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Compile and Minify for Production
-
-```sh
-npm run build
-```
