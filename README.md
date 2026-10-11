@@ -19,4 +19,15 @@ Aplicación full-stack de gestión de tareas. Proyecto personal para practicar a
 
 **Herramientas:** Git, GitHub, VS Code (REST Client para probar la API), `dotnet user-secrets`
 
+##Inicio des sesión
+<img width="1365" height="634" alt="Login" src="https://github.com/user-attachments/assets/ababb58c-46d6-45bd-a99a-be9c51352561" />
+
+##Gestión de Tareas
+<img width="1364" height="626" alt="Tareas" src="https://github.com/user-attachments/assets/93561436-1815-4b5d-a185-398ee6a24aa9" />
+
+##Gestión de Categorias
+<img width="1365" height="633" alt="Categorias" src="https://github.com/user-attachments/assets/b997c450-461a-4cd6-9645-c78d38034393" />
+
+
+
 
